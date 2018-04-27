@@ -351,11 +351,11 @@ class Attributes(UserDict):
         """
         try:
             code, name = self.__getkeys(key)
+            values = self.get(code, [])
+            values.append(value)
+            UserDict.__setitem__(self, code, values)
         except KeyError:
-            raise ValueError('Invalid radius attribute: %s' % key)
-        values = self.get(code, [])
-        values.append(value)
-        UserDict.__setitem__(self, code, values)
+            LOGGER.warning('Invalid radius attribute: %s' % key)
 
     def update(self, data):
         """
